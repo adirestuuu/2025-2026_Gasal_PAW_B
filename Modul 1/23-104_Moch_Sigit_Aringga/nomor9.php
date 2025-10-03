@@ -27,7 +27,7 @@ halo();
 nama("ariii"); 
 biodata("ariii", 21); 
 sapauser(); 
-sapauser("ariii"); 
+sapauser(); 
 
 
 $sisiPersegi = 10;

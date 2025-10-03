@@ -81,6 +81,5 @@ $hobi = "Membaca buku";
             </tr>
         </tbody>
     </table>
-
 </body>
 </html>
