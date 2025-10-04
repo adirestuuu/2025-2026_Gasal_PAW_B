@@ -1,44 +1,48 @@
-<form name="form1" method="get">
-    input berapa nilai? <input type="number" name="jumlah">
-    <input type ="submit" value="kirim">
-</form>
+<?php
+$nilaiMahasiswa = [90, 80, 75, 65, 50]; // seolah-olah input dari user
 
-<form name method="get">
-    <?php
-    if(isset($_GET['jumlah'])){
-        $a = $_GET['jumlah'];
-        for($i=1; $i<=$a; $i++){
-            echo "nilai $i : <input type='number' name='nilai$i'><br>";
-        }
+$total = 0;
+$jumlah = count($nilaiMahasiswa);
 
-        echo "<input type='hidden' name='jumlah' value='$a'>";
-        echo "<input type='submit' value='kirim'>";
+foreach ($nilaiMahasiswa as $n) {
+    $total += $n;
+}
+
+if ($jumlah > 0) {
+    $rata = $total / $jumlah;
+
+    if ($rata >= 85 && $rata <= 100) {
+        $grade = 'A';
+    } elseif ($rata >= 70 && $rata < 85) {
+        $grade = 'B';
+    } elseif ($rata >= 56 && $rata < 70) {
+        $grade = 'C';
+    } elseif ($rata >= 40 && $rata < 56) {
+        $grade = 'D';
+    } else {
+        $grade = 'E';
     }
-    if(isset($_GET['nilai1'])){
-        $a = isset($_GET['jumlah']) ? (int)$_GET['jumlah'] : 0;
-        $total = 0;
-        for($i=1; $i<=$a; $i++){
-            $nilai = $_GET["nilai$i"];
-            $total += $nilai;
-        }
-        if($a > 0){
-            $rata = $total / $a;
-            echo "Rata-rata nilai: $rata<br>";
-  
-            if($rata >= 85 && $rata <= 100){
-                $grade = 'A';
-            } elseif($rata >= 70 && $rata < 85){
-                $grade = 'B';
-            } elseif($rata >= 56 && $rata < 70){
-                $grade = 'C';
-            } elseif($rata >= 40 && $rata < 56){
-                $grade = 'D';
-            } else {
-                $grade = 'E';
-            }
-            echo "Grade: $grade";
-        } else {
-            echo "Jumlah nilai tidak valid.";
-        }
+
+    // penataan
+    echo "<pre>";
+    echo "==============================\n";
+    echo "     HASIL NILAI MAHASISWA    \n";
+    echo "==============================\n";
+    
+    $i = 1;
+    foreach ($nilaiMahasiswa as $n) {
+        echo "Nilai ke-" . str_pad($i, 2, " ", STR_PAD_LEFT) . " : " . str_pad($n, 3, " ", STR_PAD_LEFT) . "\n";
+        $i++;
     }
-    ?>
+
+    echo "------------------------------\n";
+    echo "Jumlah Nilai : " . str_pad($jumlah, 3, " ", STR_PAD_LEFT) . "\n";
+    echo "Total Nilai  : " . str_pad($total, 3, " ", STR_PAD_LEFT) . "\n";
+    echo "Rata-rata    : " . str_pad(number_format($rata,2), 6, " ", STR_PAD_LEFT) . "\n";
+    echo "------------------------------\n";
+    echo "GRADE        : " . $grade . "\n";
+    echo "==============================\n";
+    echo "</pre>";
+} else {
+    echo "Tidak ada nilai yang dimasukkan.";
+}
