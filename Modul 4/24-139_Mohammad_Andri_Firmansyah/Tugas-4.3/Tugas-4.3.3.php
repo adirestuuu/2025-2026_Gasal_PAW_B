@@ -35,7 +35,7 @@
     <?php
     if (isset($_POST['submit'])) {
         $email = $_POST['email'];
-        $url = $_POST['url'];
+        $url = filter_input(INPUT_POST, 'url', FILTER_VALIDATE_URL);
         $ip = $_POST['ip'];
         $float = $_POST['float'];
 
@@ -45,7 +45,7 @@
             echo "Email is invalid <br>";
         }
 
-        if (filter_input(INPUT_POST, $url, FILTER_VALIDATE_URL)) {
+        if ($url) {
             echo "URL is valid <br>";
         } else {
             echo "URL is invalid <br>";
