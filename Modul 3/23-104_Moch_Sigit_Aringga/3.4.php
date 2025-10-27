@@ -49,6 +49,11 @@ $weight = array(
     "Barry" => "59",
     "Charlie" => "62"
 );
+
+echo 'ppppppppppp';
+echo $weight[1][1];
+echo 'ppppppppppp';
+
 echo 'menggunakan foreach';
 echo "<br>";
 foreach ($weight as $x => $x_value) {

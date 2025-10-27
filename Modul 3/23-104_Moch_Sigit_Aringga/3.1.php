@@ -12,6 +12,24 @@ foreach($fruits as $indx => $value) {
     echo $indx." ".$value." , ";
 }
 
+
+sort($fruits);
+
+foreach($fruits as $indx => $value) {
+    echo "<br>";
+    echo $indx." ".$value;
+}
+
+echo "<br>";
+echo "<br>";
+echo "<br>";
+rsort($fruits);
+foreach($fruits as $indx => $value) {
+    echo "<br>";
+    echo $indx." ".$value;
+}
+
+echo $fruits[1];
 echo "<br>";
 echo "<br>";
 echo count($fruits);

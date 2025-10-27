@@ -33,4 +33,5 @@ $weight = array(
 
 $values = array_values($weight);
 echo "Data kedua dari array \$weight adalah: " . $values[1] . " kg";
+
 ?>
