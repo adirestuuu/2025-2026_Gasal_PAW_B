@@ -1,5 +1,6 @@
 <?php
 $errors = array();
+$success = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require 'validate.inc';
@@ -8,7 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     validatePassword($errors, $_POST, 'password');
     validateAge($errors, $_POST, 'age');
     validateDateOfBirth($errors, $_POST, 'dob');
+
+    if (empty($errors)) {
+        $success = true;
+    }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,24 +42,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <h1>Register</h1>
 
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if ($errors) {
-                echo '<div class="error">';
-                echo '<h3>Please correct the following errors:</h3>';
-                foreach ($errors as $field => $error) {
-                    echo ucfirst($field) . " is $error<br>";
-                }
-                echo '</div>';
-            } else {
-                echo '<div class="success">';
-                echo '<h3>All data is valid. Form submitted successfully!</h3>';
-                echo '</div>';
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($success) {
+            echo '<div class="success">';
+            echo '<h3>Form submitted successfully with no errors!</h3>';
+            echo '</div>';
+        } else {
+            echo '<div class="error">';
+            echo '<h3>Invalid input. Please correct the following errors:</h3>';
+            foreach ($errors as $field => $error) {
+                echo "$field is $error<br>";
             }
-        }
+            echo '</div>';
 
+            include 'form.inc';
+        }
+    } else {
         include 'form.inc';
-        ?>
+    }
+    ?>
     </div>
 </body>
 </html>
