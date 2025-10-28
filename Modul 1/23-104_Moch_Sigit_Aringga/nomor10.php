@@ -10,6 +10,7 @@ $hobi = "Membaca buku";
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,28 +25,33 @@ $hobi = "Membaca buku";
             height: 100vh;
             margin: 0;
         }
+
         table {
             width: 600px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #ffffff;
         }
-        th, td {
+
+        th,
+        td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #5062dcff;
             color: white;
             font-size: 18px;
         }
-     
+
         td:first-child {
             font-weight: bold;
             width: 30%;
         }
     </style>
 </head>
+
 <body>
 
     <table border="1">
@@ -82,4 +88,5 @@ $hobi = "Membaca buku";
         </tbody>
     </table>
 </body>
+
 </html>

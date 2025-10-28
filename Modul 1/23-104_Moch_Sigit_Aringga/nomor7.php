@@ -18,4 +18,4 @@ echo "Hasil Pembagian: $angka1 / $angka2 = $Bagi <br>";
 $mod = 17 % 5;
 echo "Sisa Bagi / Modulus dari 17 % 5 adalah $mod <br>";
 
-?>wa
+?>
