@@ -15,5 +15,4 @@ if ($nilai > 100 || $nilai < 0) {
 } else {
     echo "D<br>";
 }
-echo "nilai: ".$nilai;
-?>
+echo "nilai: " . $nilai;
