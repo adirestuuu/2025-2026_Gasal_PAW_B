@@ -24,7 +24,6 @@ $errors = array();
 $old_data = array();
 
 if (isset($_POST['surname'])) {
-    require 'validate.inc';
     validateName($error, $_POST, 'surname');
     validateEmail($error, $_POST, 'email', 'Email');
     validateAlamat($error, $_POST, 'alamat');
