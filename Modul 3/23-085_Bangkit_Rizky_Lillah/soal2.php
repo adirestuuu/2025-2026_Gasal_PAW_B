@@ -1,5 +1,6 @@
 <?php
 #3.3.2.1
+
 echo "<b>Soal 3.3.2.1</b> <br><br>";
 $fruits = array("Avocado", "Blueberry", "Cherry");
 array_push($fruits, "Apple", "Banana", "Durian", "Mango", "Orange");
