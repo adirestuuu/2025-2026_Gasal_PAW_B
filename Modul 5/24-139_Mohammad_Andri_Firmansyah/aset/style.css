@@ -148,4 +148,18 @@ input[type="text"]:focus {
     text-align: center;
 }
 
+/*PESAN*/
+
+.errors {
+    color: red;
+    font-weight: 500;
+}
+
+.sukses {
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+    color: rgb(1, 212, 1);
+}
+
 
