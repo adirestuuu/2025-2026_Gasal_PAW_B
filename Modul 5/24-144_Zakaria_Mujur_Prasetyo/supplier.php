@@ -2,37 +2,30 @@
 // koneksi database dan helper
 require __DIR__ . '/koneksi.php';
 
-// aksi hapus data supplier
+// aksi hapus data supplier (logika tidak diubah)
 if (($_GET['action'] ?? '') === 'delete') {
-  // ID menjadi integer
   $id = (int)($_GET['id'] ?? 0);
   if ($id > 0) {
-    // prepared statement untuk menurut ID
     $stmt = mysqli_prepare($conn, 'DELETE FROM supplier WHERE id = ?');
     if ($stmt) {
-      // Ikat parameter (i = integer), lalu eksekusi dan tutup statement
       mysqli_stmt_bind_param($stmt, 'i', $id);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      // Simpan pesan sukses ke flash untuk ditampilkan setelah redirect
       flash('ok', 'Supplier dihapus.');
     }
   }
-  // mencegah resubmit saat refresh
   header('Location: ' . base_url() . 'supplier.php');
   exit;
 }
 
-// ngambil data supplier untuk  jadi tabel
-$rows = []; // default kosong gagal
-$res = mysqli_query($conn, query: 'SELECT id, nama, telp, alamat FROM supplier ORDER BY id ASC'); // query semua supplier terurut
+// ngambil data supplier untuk tabel
+$rows = [];
+$res = mysqli_query($conn, 'SELECT id, nama, telp, alamat FROM supplier ORDER BY id ASC');
 if ($res) {
-  // ubah query menjadi array asosiatif
   $rows = mysqli_fetch_all($res, MYSQLI_ASSOC);
   mysqli_free_result($res);
 }
 ?>
-
 
 <!doctype html>
 <html lang="id">
@@ -43,43 +36,35 @@ if ($res) {
   <link href="assets/style.css" rel="stylesheet">
 </head>
 <body>
-<!-- Navigasi/header halaman -->
-<nav class="navigasi bgputih garisbawah">
-  <div class="wadah">
-    <a class="merek" href="<?= base_url() ?>supplier.php">Data Master Supplier</a>
-    <div class="kanan"></div>
-  </div>
-</nav>
-<!-- Konten utama -->
 <main class="wadah jarak">
+  <!-- Bar judul + tombol kanan: format seperti contoh -->
   <div class="flex antara sejajar bawah3">
-    <h4 class="bawah0"> </h4>
-    <a href="<?= base_url() ?>supplier_add.php" class="tombol sukses">Tambah Data</a>
+    <h3 class="bawah0" style="color:#2f89c8; font-weight:600;">Data Master Supplier</h3>
+    <a href="<?= base_url() ?>supplier_add.php" class="tombol sukses kecil">Tambah Data</a>
   </div>
-  <!-- Tampilkan pesan flash (sukses/error) jika ada -->
+
+  <!-- Flash Pesan -->
   <?php if ($m = flash('ok')): ?><div class="pesan pesanok"><?= htmlspecialchars($m) ?></div><?php endif; ?>
   <?php if ($m = flash('err')): ?><div class="pesan pesanerr"><?= htmlspecialchars($m) ?></div><?php endif; ?>
 
-  <div class="kartu bayangan">
+  <!-- Kartu tabel -->
+  <div class="kartu bayangan" style="border: none;">
     <div class="isi">
       <div class="tabelres">
-        <!-- Tabel data supplier -->
         <table class="tabel tabelselang tengahvert">
           <thead>
             <tr>
-              <th style="width:60px">No</th>
-              <th>Nama</th>
-              <th>Telp</th>
-              <th>Alamat</th>
-              <th style="width:160px">Tindakan</th>
+              <th style="width:60px; background-color: #60caffbe;">No</th>
+              <th style="width:60px; background-color: #60caffbe;">Nama</th>
+              <th style="width:60px; background-color: #60caffbe;">Telp</th>
+              <th style="width:60px; background-color: #60caffbe;">Alamat</th>
+              <th style="width:60px; background-color: #60caffbe;">Tindakan</th>
             </tr>
           </thead>
           <tbody>
             <?php if (!$rows): ?>
-              <!-- belum ada data -->
-              <tr><td colspan="5" class="tengah redup">Belum ada data</td></tr>
+            <tr><td colspan="5" class="tengah redup">Belum ada data</td></tr>
             <?php else: ?>
-              <!-- data supplier -->
               <?php $no=1; foreach ($rows as $r): ?>
               <tr>
                 <td><?= $no++ ?></td>
