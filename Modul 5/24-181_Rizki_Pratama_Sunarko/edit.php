@@ -1,8 +1,46 @@
 <?php
 require 'koneksi.php';
-$id = $_GET['id'];
-$data = mysqli_query($koneksi, "SELECT * FROM supplier WHERE id='$id'");
-$row = mysqli_fetch_assoc($data);
+
+$errors = [];
+$id = isset($_GET['id']) ? $_GET['id'] : '';
+$nama = '';
+$telp = '';
+$alamat = '';
+
+if ($id) {
+    $data = mysqli_query($koneksi, "SELECT * FROM supplier WHERE id='$id'");
+    if ($row = mysqli_fetch_assoc($data)) {
+        $nama = $row['nama'];
+        $telp = $row['telp'];
+        $alamat = $row['alamat'];
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (empty($_POST['nama'])) {
+        $errors[] = 'Nama harus diisi';
+    } else {
+        $nama = $_POST['nama'];
+    }
+
+    if (empty($_POST['telp'])) {
+        $errors[] = 'Nomor Telepon harus diisi';
+    } else {
+        $telp = $_POST['telp'];
+    }
+
+    if (empty($_POST['alamat'])) {
+        $errors[] = 'Alamat harus diisi';
+    } else {
+        $alamat = $_POST['alamat'];
+    }
+
+    if (empty($errors)) {
+        header('Location: proses_edit.php');
+        exit;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +70,20 @@ input, textarea {
 button { padding:7px 14px; border:none; cursor:pointer; border-radius:4px; }
 .btn-update { background:#4CAF50; color:white; }
 .btn-cancel { background:#f44336; color:white; }
+
+.error-message {
+    background: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.error-message ul {
+    margin: 0;
+    padding-left: 20px;
+}
 </style>
 
 </head>
@@ -42,17 +94,27 @@ button { padding:7px 14px; border:none; cursor:pointer; border-radius:4px; }
 <h2>Edit Data Master Supplier</h2>
 <hr class="title-line">
 
-<form action="proses_edit.php" method="POST">
-<input type="hidden" name="id" value="<?= $row['id']; ?>">
+<?php if (!empty($errors)): ?>
+    <div class="error-message">
+        <ul>
+            <?php foreach ($errors as $error): ?>
+                <li><?php echo htmlspecialchars($error); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<form action="" method="POST">
+<input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
 
 <label>Nama</label>
-<input type="text" name="nama" value="<?= $row['nama']; ?>" required><br>
+<input type="text" name="nama" value="<?= htmlspecialchars($nama) ?>"><br>
 
 <label>Telp</label>
-<input type="text" name="telp" value="<?= $row['telp']; ?>" required><br>
+<input type="text" name="telp" value="<?= htmlspecialchars($telp) ?>"><br>
 
 <label>Alamat</label>
-<input type="text" name="alamat" value="<?= $row['alamat']; ?>" required><br>
+<input type="text" name="alamat" value="<?= htmlspecialchars($alamat) ?>"><br>
 
 <button type="submit" class="btn-update">Update</button>
 <a href="index.php"><button type="button" class="btn-cancel">Batal</button></a>

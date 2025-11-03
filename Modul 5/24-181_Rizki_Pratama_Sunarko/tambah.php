@@ -1,3 +1,34 @@
+<?php
+$errors = [];
+$nama = '';
+$telp = '';
+$alamat = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (empty($_POST['nama'])) {
+        $errors[] = 'Nama harus diisi';
+    } else {
+        $nama = $_POST['nama'];
+    }
+
+    if (empty($_POST['telp'])) {
+        $errors[] = 'Nomor Telepon harus diisi';
+    } else {
+        $telp = $_POST['telp'];
+    }
+
+    if (empty($_POST['alamat'])) {
+        $errors[] = 'Alamat harus diisi';
+    } else {
+        $alamat = $_POST['alamat'];
+    }
+
+    if (empty($errors)) {
+        header('Location: proses_tambah.php');
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,6 +95,20 @@
         background: #d9534f;
         color: white;
     }
+
+    .error-message {
+        background: #ffebee;
+        color: #c62828;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .error-message ul {
+        margin: 0;
+        padding-left: 20px;
+    }
 </style>
 
 </head>
@@ -74,21 +119,31 @@
 <h2>Tambah Data Master Supplier Baru</h2>
 <hr>
 
-<form action="proses_tambah.php" method="POST">
+<?php if (!empty($errors)): ?>
+    <div class="error-message">
+        <ul>
+            <?php foreach ($errors as $error): ?>
+                <li><?php echo htmlspecialchars($error); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<form action="" method="POST">
 
 <div>
 <label>Nama</label>
-<input type="text" name="nama" placeholder="nama" required>
+<input type="text" name="nama" placeholder="nama" value="<?php echo htmlspecialchars($nama); ?>">
 </div>
 
 <div>
 <label>Telp</label>
-<input type="text" name="telp" placeholder="telp" required>
+<input type="text" name="telp" placeholder="telp" value="<?php echo htmlspecialchars($telp); ?>">
 </div>
 
 <div>
 <label>Alamat</label>
-<input type="text" name="alamat" placeholder="alamat" required>
+<input type="text" name="alamat" placeholder="alamat" value="<?php echo htmlspecialchars($alamat); ?>">
 </div>
 
 <div style="margin-top: 10px;">
